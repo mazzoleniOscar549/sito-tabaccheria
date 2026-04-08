@@ -14,15 +14,17 @@
 </head>
 
 <body>
-  <div id="toast-notification" class="toast">
-  <div class="toast-content">
-    <i class="fas fa-tag"></i>
-    <div class="toast-msg">
-      <strong>Novità!</strong>
-      <span id="toast-text">Prodotto X disponibile ora!</span>
+ <div id="small-popup" class="sp-overlay">
+  <div class="sp-content">
+    <span class="sp-close" onclick="closeSmallPopup()">&times;</span>
+    <div class="sp-icon">
+      <i class="fas fa-exclamation-circle"></i>
+    </div>
+    <div class="sp-text">
+      <strong>Avviso Rapido</strong>
+      <span id="sp-message">Prodotto X disponibile ora o scontato! Passa a trovarci.</span>
     </div>
   </div>
-  <span class="toast-close" onclick="hideToast()">&times;</span>
 </div>
 
   <div class="menu-icon" onclick="toggleMenu()">
