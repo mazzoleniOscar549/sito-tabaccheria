@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Inject Chatbot HTML
+    // 1. Inject Chatbot HTML con pulsanti rapidi nel benvenuto
     const chatHTML = `
       <div id="chat-widget">
         <div id="chat-button" onclick="toggleChat()">
@@ -12,7 +12,15 @@ document.addEventListener('DOMContentLoaded', () => {
             <i class="fas fa-times" style="cursor:pointer" onclick="toggleChat()"></i>
           </div>
           <div class="chat-body" id="chat-content">
-            <div class="msg bot">Ciao! Sono l'assistente delle sorelle Bianchi. Come posso aiutarti?</div>
+            <div class="msg bot">
+              Ciao! Sono l'assistente delle sorelle Bianchi. Clicca un servizio o scrivimi!
+              <div class="chat-buttons" style="display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;">
+                <button onclick="sendQuickMsg('SPID')" style="background:white; border:1px solid #3498db; color:#3498db; padding:5px 10px; border-radius:15px; font-size:12px; cursor:pointer;">🆔 SPID</button>
+                <button onclick="sendQuickMsg('Dove siete?')" style="background:white; border:1px solid #3498db; color:#3498db; padding:5px 10px; border-radius:15px; font-size:12px; cursor:pointer;">📍 Dove</button>
+                <button onclick="sendQuickMsg('Orari')" style="background:white; border:1px solid #3498db; color:#3498db; padding:5px 10px; border-radius:15px; font-size:12px; cursor:pointer;">🕒 Orari</button>
+                <button onclick="sendQuickMsg('Sigarette')" style="background:white; border:1px solid #3498db; color:#3498db; padding:5px 10px; border-radius:15px; font-size:12px; cursor:pointer;">🚬 Sigarette</button>
+              </div>
+            </div>
           </div>
           <div class="chat-footer">
             <input type="text" id="user-input" placeholder="Scrivi un messaggio..." onkeypress="handleChatKey(event)">
@@ -29,6 +37,13 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // --- LOGICA CHATBOT (IBRIDA: FISSA + API) ---
+
+// Funzione per i pulsanti rapidi
+window.sendQuickMsg = function(text) {
+    const input = document.getElementById('user-input');
+    input.value = text;
+    sendMessage();
+}
 
 window.toggleChat = function() {
     const chatWindow = document.getElementById('chat-window');
@@ -53,7 +68,7 @@ window.sendMessage = async function() {
     appendMessage(text, 'user');
     userInput.value = '';
 
-// 1. CONTROLLO RISPOSTE RAPIDE (Logica predefinita aggiornata)
+    // 1. CONTROLLO RISPOSTE RAPIDE
     const lowerText = text.toLowerCase();
     let staticReply = "";
 
@@ -66,28 +81,23 @@ window.sendMessage = async function() {
     } else if (lowerText.includes("come va") || lowerText.includes("come stai") || lowerText.includes("tutto bene")) {
         staticReply = "Tutto bene, grazie! Qui in Piazza Orologio siamo sempre pronti a servirti. Tu come posso aiutarti?";
     } else if (lowerText.includes("pazzo") || lowerText.includes("scemo") || lowerText.includes("stronzo") || lowerText.includes("vaffanculo")) {
-        staticReply = "Siamo un'attività commerciale e questo è un assistente automatico. Ti preghiamo di mantenere un linguaggio decoroso. Come posso aiutarti per i nostri servizi?";
+        staticReply = "Siamo un'attività commerciale. Ti preghiamo di mantenere un linguaggio decoroso. Come posso aiutarti?";
     } else if (lowerText.includes("amazon") || lowerText.includes("hub") || lowerText.includes("pacco") || lowerText.includes("ritiro")) {
-        staticReply = "Siamo punto Amazon Hub! Puoi ritirare o rendere i tuoi pacchi comodamente da noi durante gli orari di apertura.";
+        staticReply = "Siamo punto Amazon Hub! Puoi ritirare o rendere i tuoi pacchi durante gli orari di apertura.";
     } else if (lowerText.includes("bollette") || lowerText.includes("pagamenti") || lowerText.includes("pagopa") || lowerText.includes("bollo")) {
         staticReply = "Qui puoi pagare bollettini postali, PagoPA, Mav/Rav e bollo auto in pochi istanti.";
     } else if (lowerText.includes("lotto") || lowerText.includes("gratta") || lowerText.includes("10elotto")) {
-        staticReply = "Tentate la fortuna! Abbiamo Lotto, 10eLotto e una vasta scelta di Gratta e Vinci sempre aggiornati.";
+        staticReply = "Abbiamo Lotto, 10eLotto e una vasta scelta di Gratta e Vinci sempre aggiornati.";
     } else if (lowerText.includes("sigarette") || lowerText.includes("svapo") || lowerText.includes("iqos") || lowerText.includes("glo")) {
-        staticReply = "Siamo rivenditori autorizzati dei principali marchi di tabacco e dispositivi da fumo elettronico (IQOS, GLO, VEEV).";
+        staticReply = "Siamo rivenditori autorizzati di tabacchi e dispositivi come IQOS, GLO e VEEV.";
     } else if (lowerText.includes("edicola") || lowerText.includes("giornali") || lowerText.includes("riviste")) {
-        staticReply = "La nostra edicola è fornitissima di quotidiani, riviste, fumetti e figurine per i più piccoli.";
-    } else if (lowerText.includes("dove") || lowerText.includes("indirizzo") || lowerText.includes("posizione")) {
-        staticReply = "Ci trovi in Piazza Orologio 2, a Clusone (BG). Proprio di fronte all'orologio planetario!";
-    } else if (lowerText.includes("grazie") || lowerText.includes("perfetto") || lowerText.includes("gentile")) {
-        staticReply = "Prego! È un piacere essere d'aiuto. Ti aspettiamo in negozio!";
+        staticReply = "La nostra edicola offre quotidiani, riviste, fumetti e figurine.";
+    } else if (lowerText.includes("dove") || lowerText.includes("indirizzo") || lowerText.includes("posizione") || lowerText.includes("siete")) {
+        staticReply = "Ci trovi in Piazza Orologio 2, a Clusone (BG), proprio di fronte all'orologio planetario.";
+    } else if (lowerText.includes("grazie") || lowerText.includes("perfetto")) {
+        staticReply = "Prego! È un piacere. Ti aspettiamo in negozio!";
     }
 
-    // Se abbiamo trovato una risposta fissa, la inviamo e usciamo
-    if (staticReply !== "") {
-        setTimeout(() => appendMessage(staticReply, 'bot'), 500);
-        return;
-    }
     if (staticReply !== "") {
         setTimeout(() => appendMessage(staticReply, 'bot'), 500);
         return;
@@ -103,10 +113,8 @@ window.sendMessage = async function() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ message: text })
         });
-        
         const data = await response.json();
         const reply = data.reply || "Scusa, riprova più tardi.";
-        
         if(loadingElem) loadingElem.innerText = reply;
     } catch(err) {
         if(loadingElem) loadingElem.innerText = "Errore di connessione. Chiamaci allo 0346 21194.";
