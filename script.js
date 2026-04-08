@@ -198,35 +198,3 @@ window.addEventListener('load', () => {
   }, 1000); 
 });
 
-// Funzione per mostrare il piccolo pop-up
-function showSmallPopup(messaggio) {
-  const popup = document.getElementById('small-popup');
-  const text = document.getElementById('sp-message');
-  
-  if(messaggio) {
-    text.innerText = messaggio;
-  }
-  
-  popup.classList.add('active');
-}
-
-// Funzione per chiudere il piccolo pop-up
-function closeSmallPopup() {
-  const popup = document.getElementById('small-popup');
-  popup.classList.remove('active');
-  // Nasconde completamente l'elemento dopo l'animazione
-  setTimeout(() => {
-    popup.style.display = 'none';
-  }, 300);
-}
-
-// Mostra il pop-up QUASI SUBITO (0.5 secondi) dopo il caricamento
-window.addEventListener('load', () => {
-  const popup = document.getElementById('small-popup');
-  popup.style.display = 'flex'; // Prepara il flexbox centrato
-  
-  setTimeout(() => {
-    // QUI inserisci il tuo messaggio personalizzato
-    showSmallPopup("È arrivato il nuovo Gratta e Vinci 'Mille e una Notte'! Prova la fortuna.");
-  }, 500); 
-});
