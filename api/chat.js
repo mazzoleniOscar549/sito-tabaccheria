@@ -1,7 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export default async function handler(req, res) {
-  // Consentire solo richieste POST
   if (req.method !== 'POST') {
     return res.status(405).json({ reply: 'Metodo non consentito' });
   }
@@ -13,11 +12,6 @@ export default async function handler(req, res) {
   }
 
   const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-
-  console.log("🔍 DEBUG START");
-  console.log("GEMINI_API_KEY esiste?", !!GEMINI_API_KEY);
-  console.log("GEMINI_API_KEY lunghezza:", GEMINI_API_KEY ? GEMINI_API_KEY.length : 0);
-  console.log("Messaggio ricevuto:", message);
 
   if (!GEMINI_API_KEY) {
     return res.status(500).json({
@@ -39,8 +33,9 @@ Regole per te:
     console.log("📝 Inizializzando GoogleGenerativeAI...");
     const client = new GoogleGenerativeAI(GEMINI_API_KEY);
     
-    console.log("🤖 Caricando modello gemini-1.5-pro...");
-    const model = client.getGenerativeModel({ model: "gemini-1.5-pro" });
+    console.log("🤖 Caricando modello gemini-1.0-pro...");
+    // ✅ CAMBIATO: gemini-1.0-pro
+    const model = client.getGenerativeModel({ model: "gemini-1.0-pro" });
 
     console.log("📤 Inviando richiesta a Gemini...");
     const result = await model.generateContent(systemPrompt + "\n\nDomanda utente: " + message);
@@ -51,17 +46,5 @@ Regole per te:
 
     console.log("✅ Risposta ricevuta:", text);
 
-    return res.status(200).json({ reply: text.trim() });
-
-  } catch (err) {
-    console.error("❌ ERRORE CATTURATO");
-    console.error("Tipo di errore:", err.name);
-    console.error("Messaggio errore:", err.message);
-    console.error("Stack completo:", err.stack);
-    console.error("Errore completo JSON:", JSON.stringify(err, null, 2));
-    
-    return res.status(500).json({ 
-      reply: "Si è verificato un errore: " + err.message 
-    });
-  }
-}
+    return res.status(200).json({ reply
+
