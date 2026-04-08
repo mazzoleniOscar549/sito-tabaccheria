@@ -1,41 +1,4 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
-
 export default async function handler(req, res) {
-  if (req.method === 'GET') {
-    // Endpoint per listare i modelli disponibili
-    const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-
-    if (!GEMINI_API_KEY) {
-      return res.status(500).json({
-        reply: "Manca GEMINI_API_KEY"
-      });
-    }
-
-    try {
-      const client = new GoogleGenerativeAI(GEMINI_API_KEY);
-      const models = await client.listModels();
-      
-      console.log("📋 Modelli disponibili:");
-      const modelList = [];
-      for await (const model of models) {
-        console.log("- " + model.name);
-        modelList.push(model.name);
-      }
-
-      return res.status(200).json({ 
-        models: modelList,
-        reply: "Modelli elencati nei log" 
-      });
-
-    } catch (err) {
-      console.error("❌ Errore nel listare modelli:", err.message);
-      return res.status(500).json({ 
-        reply: "Errore: " + err.message 
-      });
-    }
-  }
-
-  // POST - Chat normale
   if (req.method !== 'POST') {
     return res.status(405).json({ reply: 'Metodo non consentito' });
   }
@@ -65,19 +28,44 @@ Regole per te:
 3. Usa un tono accogliente e amichevole. Non inserire risposte formattate con Markdown (usa solo testo semplice).`;
 
   try {
-    const client = new GoogleGenerativeAI(GEMINI_API_KEY);
-    const model = client.getGenerativeModel({ model: "gemini-1.0-pro" });
+    // ✅ USA L'API REST DIRETTAMENTE
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
 
-    const result = await model.generateContent(systemPrompt + "\n\nDomanda utente: " + message);
-    const response = await result.response;
-    const text = response.text();
+    const requestBody = {
+      contents: [
+        {
+          role: "user",
+          parts: [{ text: systemPrompt + "\n\nDomanda utente: " + message }]
+        }
+      ]
+    };
 
-    return res.status(200).json({ reply: text.trim() });
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(requestBody)
+    });
+
+    const data = await response.json();
+
+    console.log("Response Status:", response.status);
+    console.log("Gemini Response:", JSON.stringify(data, null, 2));
+
+    if (data && data.candidates && data.candidates.length > 0) {
+      const reply = data.candidates[0].content.parts[0].text.trim();
+      console.log("✅ Risposta ricevuta:", reply);
+      return res.status(200).json({ reply });
+    } else {
+      console.error("❌ Errore:", JSON.stringify(data, null, 2));
+      return res.status(500).json({ 
+        reply: "Scusa, in questo momento i miei circuiti sono occupati. Puoi chiamarci allo 0346 21194." 
+      });
+    }
 
   } catch (err) {
-    console.error("❌ ERRORE:", err.message);
+    console.error("❌ Errore fetch:", err.message);
     return res.status(500).json({ 
-      reply: "Errore: " + err.message 
+      reply: "Errore di connessione." 
     });
   }
 }
