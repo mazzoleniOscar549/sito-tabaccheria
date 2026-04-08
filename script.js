@@ -89,7 +89,7 @@ window.sendMessage = async function() {
     } else if (lowerText.includes("lotto") || lowerText.includes("gratta") || lowerText.includes("10elotto")) {
         staticReply = "Abbiamo Lotto, 10eLotto e una vasta scelta di Gratta e Vinci sempre aggiornati.";
     } else if (lowerText.includes("sigarette") || lowerText.includes("svapo") || lowerText.includes("iqos") || lowerText.includes("glo")) {
-        staticReply = "Siamo rivenditori autorizzati di tabacchi e dispositivi come IQOS, GLO e VEEV.";
+        staticReply = "Siamo rivenditori autorizzati di tabacchi e dispositivi elettronici.";
     } else if (lowerText.includes("edicola") || lowerText.includes("giornali") || lowerText.includes("riviste")) {
         staticReply = "La nostra edicola offre quotidiani, riviste, fumetti e figurine.";
     } else if (lowerText.includes("dove") || lowerText.includes("indirizzo") || lowerText.includes("posizione") || lowerText.includes("siete")) {
