@@ -33,7 +33,9 @@ Regole per te:
   try {
     // ✅ Inizializza il client Google Generative AI
     const client = new GoogleGenerativeAI(GEMINI_API_KEY);
-    const model = client.getGenerativeModel({ model: "gemini-pro" });
+    
+    // ✅ CAMBIATO: prova con gemini-1.5-pro
+    const model = client.getGenerativeModel({ model: "gemini-1.5-pro" });
 
     // ✅ Invia il messaggio
     const result = await model.generateContent(systemPrompt + "\n\nDomanda utente: " + message);
