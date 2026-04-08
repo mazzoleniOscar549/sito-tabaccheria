@@ -53,14 +53,41 @@ window.sendMessage = async function() {
     appendMessage(text, 'user');
     userInput.value = '';
 
-    // 1. CONTROLLO RISPOSTE RAPIDE (Per risparmiare API)
+// 1. CONTROLLO RISPOSTE RAPIDE (Logica predefinita aggiornata)
     const lowerText = text.toLowerCase();
     let staticReply = "";
 
-    if (lowerText.includes("spid")) staticReply = "Servizio SPID attivo! Porta documenti, tessera sanitaria e cellulare. Ti aspettiamo in negozio.";
-    if (lowerText.includes("orari")) staticReply = "Siamo aperti Lun-Sab 07:30-19:30. Mercoledì e Domenica solo mattina 07:30-12:30.";
-    if (lowerText.includes("ciao") || lowerText.includes("buongiorno")) staticReply = "Ciao! Come posso aiutarti oggi?";
+    if (lowerText.includes("spid")) {
+        staticReply = "Servizio SPID attivo! Porta documenti, tessera sanitaria e cellulare. Ti aspettiamo in negozio per l'attivazione.";
+    } else if (lowerText.includes("orari") || lowerText.includes("aperto") || lowerText.includes("chiuso")) {
+        staticReply = "Siamo aperti Lun-Sab 07:30-19:30. Mercoledì e Domenica solo mattina 07:30-12:30.";
+    } else if (lowerText.includes("ciao") || lowerText.includes("buongiorno") || lowerText.includes("buonasera")) {
+        staticReply = "Ciao! Benvenuto alla Tabaccheria Bianchi. Come posso aiutarti oggi?";
+    } else if (lowerText.includes("come va") || lowerText.includes("come stai") || lowerText.includes("tutto bene")) {
+        staticReply = "Tutto bene, grazie! Qui in Piazza Orologio siamo sempre pronti a servirti. Tu come posso aiutarti?";
+    } else if (lowerText.includes("pazzo") || lowerText.includes("scemo") || lowerText.includes("stronzo") || lowerText.includes("vaffanculo")) {
+        staticReply = "Siamo un'attività commerciale e questo è un assistente automatico. Ti preghiamo di mantenere un linguaggio decoroso. Come posso aiutarti per i nostri servizi?";
+    } else if (lowerText.includes("amazon") || lowerText.includes("hub") || lowerText.includes("pacco") || lowerText.includes("ritiro")) {
+        staticReply = "Siamo punto Amazon Hub! Puoi ritirare o rendere i tuoi pacchi comodamente da noi durante gli orari di apertura.";
+    } else if (lowerText.includes("bollette") || lowerText.includes("pagamenti") || lowerText.includes("pagopa") || lowerText.includes("bollo")) {
+        staticReply = "Qui puoi pagare bollettini postali, PagoPA, Mav/Rav e bollo auto in pochi istanti.";
+    } else if (lowerText.includes("lotto") || lowerText.includes("gratta") || lowerText.includes("10elotto")) {
+        staticReply = "Tentate la fortuna! Abbiamo Lotto, 10eLotto e una vasta scelta di Gratta e Vinci sempre aggiornati.";
+    } else if (lowerText.includes("sigarette") || lowerText.includes("svapo") || lowerText.includes("iqos") || lowerText.includes("glo")) {
+        staticReply = "Siamo rivenditori autorizzati dei principali marchi di tabacco e dispositivi da fumo elettronico (IQOS, GLO, VEEV).";
+    } else if (lowerText.includes("edicola") || lowerText.includes("giornali") || lowerText.includes("riviste")) {
+        staticReply = "La nostra edicola è fornitissima di quotidiani, riviste, fumetti e figurine per i più piccoli.";
+    } else if (lowerText.includes("dove") || lowerText.includes("indirizzo") || lowerText.includes("posizione")) {
+        staticReply = "Ci trovi in Piazza Orologio 2, a Clusone (BG). Proprio di fronte all'orologio planetario!";
+    } else if (lowerText.includes("grazie") || lowerText.includes("perfetto") || lowerText.includes("gentile")) {
+        staticReply = "Prego! È un piacere essere d'aiuto. Ti aspettiamo in negozio!";
+    }
 
+    // Se abbiamo trovato una risposta fissa, la inviamo e usciamo
+    if (staticReply !== "") {
+        setTimeout(() => appendMessage(staticReply, 'bot'), 500);
+        return;
+    }
     if (staticReply !== "") {
         setTimeout(() => appendMessage(staticReply, 'bot'), 500);
         return;
