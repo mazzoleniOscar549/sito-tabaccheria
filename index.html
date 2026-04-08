@@ -14,16 +14,15 @@
 </head>
 
 <body>
-  <div id="promo-popup" class="popup-overlay">
-  <div class="popup-content">
-    <span class="close-popup" onclick="closePopup()">&times;</span>
-    <div class="popup-icon">
-      <i class="fas fa-bullhorn"></i>
+  <div id="toast-notification" class="toast">
+  <div class="toast-content">
+    <i class="fas fa-tag"></i>
+    <div class="toast-msg">
+      <strong>Novità!</strong>
+      <span id="toast-text">Prodotto X disponibile ora!</span>
     </div>
-    <h2>Novità in arrivo!</h2>
-    <p id="promo-text">Il nuovo numero della tua rivista preferita è disponibile. Passa a trovarci!</p>
-    <button class="btn-link" onclick="closePopup()">Ottimo, grazie!</button>
   </div>
+  <span class="toast-close" onclick="hideToast()">&times;</span>
 </div>
 
   <div class="menu-icon" onclick="toggleMenu()">
