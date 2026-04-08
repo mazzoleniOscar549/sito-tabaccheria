@@ -171,3 +171,34 @@ async function getBotResponseAsync(userMessage) {
         return "⚠️ Attenzione: Il bot non può connettersi. Ricorda che questa nuova versione super-sicura funziona solo se pubblichi il sito su Vercel (o usi un server locale abilitato).";
     }
 }
+
+// Funzione per mostrare il pop-up
+function showPopup(messaggio) {
+  const popup = document.getElementById('promo-popup');
+  const text = document.getElementById('promo-text');
+  
+  if(messaggio) {
+    text.innerText = messaggio;
+  }
+  
+  popup.classList.add('active');
+}
+
+// Funzione per chiudere il pop-up
+function closePopup() {
+  const popup = document.getElementById('promo-popup');
+  popup.classList.remove('active');
+  setTimeout(() => {
+    popup.style.display = 'none';
+  }, 300);
+}
+
+// Mostra il pop-up automaticamente 2 secondi dopo il caricamento
+window.addEventListener('load', () => {
+  const popup = document.getElementById('promo-popup');
+  popup.style.display = 'flex'; // Prepara il flexbox
+  
+  setTimeout(() => {
+    showPopup("IQOS ILUMA è tornata disponibile in tutti i colori! Passa a trovarci in Piazza Orologio.");
+  }, 2000); 
+});
