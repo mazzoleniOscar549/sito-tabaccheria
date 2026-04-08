@@ -171,3 +171,29 @@ async function getBotResponseAsync(userMessage) {
         return "⚠️ Attenzione: Il bot non può connettersi. Ricorda che questa nuova versione super-sicura funziona solo se pubblichi il sito su Vercel (o usi un server locale abilitato).";
     }
 }
+
+function showToast(messaggio) {
+  const toast = document.getElementById('toast-notification');
+  const text = document.getElementById('toast-text');
+  
+  if(messaggio) text.innerText = messaggio;
+  
+  toast.classList.add('show');
+
+  // Scompare da sola dopo 6 secondi
+  setTimeout(() => {
+    hideToast();
+  }, 6000);
+}
+
+function hideToast() {
+  const toast = document.getElementById('toast-notification');
+  toast.classList.remove('show');
+}
+
+// Avvio automatico all'ingresso
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    showToast("Sigarette elettroniche scontate del 10%!");
+  }, 1000); 
+});
