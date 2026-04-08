@@ -1,0 +1,15 @@
+{
+  "name": "sito-tabaccheria",
+  "version": "1.0.0",
+  "description": "Tabaccheria Bianchi",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.11.0"
+  },
+  "devDependencies": {}
+}
