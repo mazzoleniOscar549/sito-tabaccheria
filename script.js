@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <i class="fas fa-times" style="cursor:pointer" onclick="toggleChat()"></i>
           </div>
           <div class="chat-body" id="chat-content">
-            <div class="msg bot">Ciao! Sono l'assistente della Tabaccheria Bianchi. Come posso aiutarti?</div>
+            <div class="msg bot">Ciao! Sono l'assistente delle sorelle Bianchi. Come posso aiutarti?</div>
           </div>
           <div class="chat-footer">
             <input type="text" id="user-input" placeholder="Scrivi un messaggio..." onkeypress="handleChatKey(event)">
@@ -28,7 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
     setupReveal();
 });
 
-// --- LOGICA CHATBOT (RISPOSTE PREDEFINITE) ---
+// --- LOGICA CHATBOT (IBRIDA: FISSA + API) ---
+
 window.toggleChat = function() {
     const chatWindow = document.getElementById('chat-window');
     const input = document.getElementById('user-input');
@@ -44,7 +45,7 @@ window.handleChatKey = function(e) {
     if (e.key === 'Enter') sendMessage();
 }
 
-window.sendMessage = function() {
+window.sendMessage = async function() {
     const userInput = document.getElementById('user-input');
     const text = userInput.value.trim();
     if (!text) return;
@@ -52,33 +53,37 @@ window.sendMessage = function() {
     appendMessage(text, 'user');
     userInput.value = '';
 
-    // Risposta immediata senza API
-    const reply = getStaticResponse(text);
-    setTimeout(() => {
-        appendMessage(reply, 'bot');
-    }, 500); // Mezzo secondo di ritardo per farlo sembrare reale
-}
+    // 1. CONTROLLO RISPOSTE RAPIDE (Per risparmiare API)
+    const lowerText = text.toLowerCase();
+    let staticReply = "";
 
-function getStaticResponse(userMessage) {
-    const msg = userMessage.toLowerCase();
+    if (lowerText.includes("spid")) staticReply = "Servizio SPID attivo! Porta documenti, tessera sanitaria e cellulare. Ti aspettiamo in negozio.";
+    if (lowerText.includes("orari")) staticReply = "Siamo aperti Lun-Sab 07:30-19:30. Mercoledì e Domenica solo mattina 07:30-12:30.";
+    if (lowerText.includes("ciao") || lowerText.includes("buongiorno")) staticReply = "Ciao! Come posso aiutarti oggi?";
 
-    if (msg.includes("ciao") || msg.includes("buongiorno")) {
-        return "Ciao! Come posso aiutarti oggi?";
-    }
-    if (msg.includes("spid")) {
-        return "Servizio SPID attivo! Porta documenti, tessera sanitaria e cellulare. Ti aspettiamo in negozio.";
-    }
-    if (msg.includes("prodotti") || msg.includes("servizi")) {
-        return "Offriamo tabacchi, edicola, lotto, ricariche, SPID, bollette e Amazon Hub.";
-    }
-    if (msg.includes("orari")) {
-        return "Siamo aperti Lun-Sab 07:30-19:30. Mercoledì e Domenica solo mattina 07:30-12:30.";
-    }
-    if (msg.includes("dove") || msg.includes("posizione")) {
-        return "Siamo in Piazza Orologio 2 a Clusone (BG).";
+    if (staticReply !== "") {
+        setTimeout(() => appendMessage(staticReply, 'bot'), 500);
+        return;
     }
 
-    return "Scusa, non ho capito. Puoi chiedermi di SPID, orari, prodotti o chiamarci allo 0346 21194.";
+    // 2. SE NON È UNA RISPOSTA FISSA, USA L'IA (API)
+    const loadingId = appendMessage("Sto pensando...", 'bot');
+    const loadingElem = document.getElementById(loadingId);
+
+    try {
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: text })
+        });
+        
+        const data = await response.json();
+        const reply = data.reply || "Scusa, riprova più tardi.";
+        
+        if(loadingElem) loadingElem.innerText = reply;
+    } catch(err) {
+        if(loadingElem) loadingElem.innerText = "Errore di connessione. Chiamaci allo 0346 21194.";
+    }
 }
 
 function appendMessage(text, side) {
@@ -87,11 +92,15 @@ function appendMessage(text, side) {
     const msgDiv = document.createElement('div');
     msgDiv.className = `msg ${side}`;
     msgDiv.innerText = text;
+    const id = "msg-" + Date.now();
+    msgDiv.id = id;
     chatContent.appendChild(msgDiv);
     chatContent.scrollTop = chatContent.scrollHeight;
+    return id;
 }
 
-// --- ALTRE FUNZIONI (MENU, SCROLL, REVEAL) ---
+// --- NAVIGAZIONE, SCROLL E SLIDER ---
+
 let lastScrollTop = 0;
 function setupScrollAndMenu() {
     const menu = document.getElementById("menu");
@@ -123,4 +132,13 @@ function setupReveal() {
             }
         });
     }, { threshold: 0.1 });
-    document
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+window.moveSlider = function(direction) {
+    const slider = document.getElementById('slider');
+    if(slider) {
+        const cardWidth = slider.querySelector('.service-card').offsetWidth + 25;
+        slider.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
+    }
+}
