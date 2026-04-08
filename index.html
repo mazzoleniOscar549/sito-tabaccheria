@@ -14,6 +14,117 @@
 </head>
 
 <body>
+<style>
+  /* Stili del Pop-up */
+  .sp-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Sfondo scuro */
+    display: none; /* Inizialmente nascosto */
+    align-items: center;
+    justify-content: center;
+    z-index: 10001; /* Davanti a tutto, anche al chatbot */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(3px);
+  }
+
+  .sp-content {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    width: 320px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    transform: scale(0.7);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .sp-overlay.active { display: flex; opacity: 1; }
+  .sp-overlay.active .sp-content { transform: scale(1); }
+
+  .sp-close {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    font-size: 26px;
+    cursor: pointer;
+    color: #bbb;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+  .sp-close:hover { color: #e74c3c; }
+
+  .sp-icon {
+    font-size: 40px;
+    color: #3498db; /* Colore azzurro Bianchi */
+    margin-bottom: 15px;
+  }
+
+  .sp-text strong {
+    display: block;
+    color: #1e2b3c;
+    text-transform: uppercase;
+    font-size: 16px;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+
+  .sp-text p {
+    font-size: 15px;
+    color: #555;
+    margin: 0;
+    line-height: 1.5;
+  }
+</style>
+
+<div id="small-popup" class="sp-overlay">
+  <div class="sp-content">
+    <span class="sp-close" onclick="closeSmallPopup()">&times;</span>
+    <div class="sp-icon">
+      <i class="fas fa-bullhorn"></i>
+    </div>
+    <div class="sp-text">
+      <strong>Novità in Tabaccheria</strong>
+      <p id="sp-message">È arrivato il nuovo Gratta e Vinci! Passa a trovarci per scoprire se è la tua giornata fortunata.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Funzione per mostrare il pop-up
+  function showSmallPopup(testo) {
+    const popup = document.getElementById('small-popup');
+    if (testo) document.getElementById('sp-message').innerText = testo;
+    
+    popup.style.display = 'flex';
+    setTimeout(() => {
+      popup.classList.add('active');
+    }, 10);
+  }
+
+  // Funzione per chiudere il pop-up
+  function closeSmallPopup() {
+    const popup = document.getElementById('small-popup');
+    popup.classList.remove('active');
+    setTimeout(() => {
+      popup.style.display = 'none';
+    }, 300);
+  }
+
+  // Lancio automatico all'ingresso
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      // Puoi cambiare il messaggio qui sotto
+      showSmallPopup("Promozione: IQOS ILUMA disponibile in nuovi colori! Passa a trovarci.");
+    }, 800); // Appare dopo quasi un secondo
+  });
+</script>
+  
 
   <div class="menu-icon" onclick="toggleMenu()">
     <span></span><span></span><span></span>
