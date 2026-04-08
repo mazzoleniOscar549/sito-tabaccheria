@@ -18,7 +18,8 @@ export default async function handler(req, res) {
     });
   }
 
-  const url = `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`;
+  // ✅ CORRETTO: usa v1beta con gemini-pro
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`;
 
   const systemPrompt = `Sei l'assistente virtuale della Tabaccheria Edicola Bianchi a Clusone. 
 Sei gentile, professionale e utile.
@@ -51,12 +52,9 @@ Regole per te:
     const data = await response.json();
 
     console.log("Gemini Response COMPLETO:", JSON.stringify(data, null, 2));
-    console.log("data.candidates esiste?", !!data.candidates);
-    console.log("data.candidates è un array?", Array.isArray(data.candidates));
-    console.log("data.candidates.length:", data.candidates ? data.candidates.length : "N/A");
 
     if (data && data.candidates && data.candidates.length > 0) {
-      console.log("Risposta trovata! Contenuto:", data.candidates[0].content);
+      console.log("Risposta trovata!");
       return res.status(200).json({ reply: data.candidates[0].content.parts[0].text.trim() });
     } else {
       console.error("Gemini API Error completo:", JSON.stringify(data, null, 2));
