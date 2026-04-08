@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contatti - Tabaccheria Edicola Bianchi</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="menu-icon" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+
+  <nav id="menu" class="menu">
+    <div class="menu-links">
+      <a href="index.html">Home</a>
+      <a href="chi-siamo.html">Chi siamo</a>
+      <a href="prodotti.html">Prodotti</a>
+      <a href="area-fumatori.html">Area fumatori</a>
+      <a href="contatti.html" class="active">Contatti</a>
+    </div>
+    <a href="index.html"><img src="logo.png" class="menu-logo" alt="Logo"></a>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-logo-container">
+    <a href="index.html">
+        <img src="logo.png" class="hero-logo-img" alt="Logo">
+    </a>
+</div>
+    <img src="edicola.jpg" class="hero-bg" alt="Contatti">
+    <div class="hero-content">
+      <h1>Contattaci</h1>
+    </div>
+  </header>
+
+  <main class="contact-container">
+    <div class="contact-grid">
+      
+      <div class="info-box">
+        <h2>Recapiti</h2>
+        <div class="info-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <p><strong>Indirizzo:</strong><br>Piazza Orologio, 2<br>24023 Clusone (BG)</p>
+        </div>
+        <div class="info-item">
+          <i class="fas fa-phone"></i>
+          <p><strong>Telefono:</strong><br>0346 21194</p>
+        </div>
+        <div class="info-item">
+          <i class="fas fa-envelope"></i>
+          <p><strong>Email:</strong><br>edicolabianchi@tiscali.it</p>
+        </div>
+        <div class="info-item">
+          <i class="fas fa-clock"></i>
+          <p><strong>Orari:</strong><br>Lun-Sab: 07:00 - 19:30<br>Dom: 08:00 - 12:30</p>
+        </div>
+      </div>
+
+      <div class="form-box">
+        <h2>Inviaci un messaggio</h2>
+        <form action="https://formspree.io/f/xjgpjgpl" method="POST">
+          <div class="form-group">
+            <label>Nome Completo</label>
+            <input type="text" name="name" placeholder="Esempio: Mario Rossi" required>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="esempio@email.it" required>
+          </div>
+          <div class="form-group">
+            <label>Messaggio</label>
+            <textarea name="message" placeholder="Scrivi qui la tua richiesta..." required></textarea>
+          </div>
+          
+          <input type="hidden" name="_subject" value="Nuovo messaggio da Tabaccheria Bianchi">
+          
+          <button type="submit" class="btn-send">Invia Messaggio</button>
+        </form>
+      </div>
+
+    </div>
+
+    <div class="section-divider reveal"><i></i></div>
+
+    <div class="map-container">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2780.4682367123385!2d9.94634287664654!3d45.88195860555353!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4783935398d893af%3A0x6b7724131df95e3!2sPiazza%20Orologio%2C%20Clusone%20BG!5e0!3m2!1sit!2sit!4v1710000000000!5m2!1sit!2sit" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p><strong>Tabaccheria Edicola Bianchi</strong></p>
+      <p>Piazza Orologio, 2 - 24023 Clusone (BG)</p>
+      <div class="social-links">
+        <a href="#" target="_blank" class="fb"><i class="fab fa-facebook"></i></a>
+        <a href="#" target="_blank" class="ig"><i class="fab fa-instagram"></i></a>
+      </div>
+      <hr>
+      <p style="font-size: 14px; opacity: 0.7;">© 2026 Tabaccheria Bianchi. Tutti i diritti riservati.</p>
+    </div>
+  </footer>
+  <script src="script.js"></script>
+
+</body>
+</html>

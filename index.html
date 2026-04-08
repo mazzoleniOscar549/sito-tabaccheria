@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Tabaccheria Edicola Bianchi a Clusone. Tabacchi, giornali, servizi digitali, ricariche, SPID e molto altro.">
+  <meta name="keywords" content="tabaccheria Clusone, edicola Clusone, ricariche, SPID, lotto">
+  <meta name="author" content="Tabaccheria Bianchi">
+  <title>Tabaccheria Edicola Bianchi - Home</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="menu-icon" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+
+  <nav id="menu" class="menu">
+    <div class="menu-links">
+      <a href="index.html">Home</a>
+      <a href="chi-siamo.html">Chi siamo</a>
+      <a href="prodotti.html">Prodotti</a>
+      <a href="area-fumatori.html">Area fumatori</a>
+      <a href="contatti.html">Contatti</a>
+    </div>
+    <a href="index.html"><img src="logo.png" class="menu-logo" alt="Logo"></a>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-logo-container">
+      <a href="index.html">
+        <img src="logo.png" class="hero-logo-img" alt="Logo">
+      </a>
+    </div>
+    <img src="edicola.jpg" class="hero-bg" alt="Clusone">
+    <div class="hero-content">
+      <h1>TABACCHERIA BIANCHI</h1>
+      <p>Le sorelle Bianchi</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="about-short reveal">
+      <h2>Benvenuti in Famiglia</h2>
+      <p>Dal cuore di Piazza Orologio, offriamo cortesia e innovazione. Siamo il tuo punto di riferimento per tabacchi,
+        edicola e servizi digitali a Clusone.</p>
+      <a href="chi-siamo.html" class="btn-link">La nostra storia →</a>
+    </section>
+
+    <div class="section-divider reveal"><i></i></div>
+
+    <section class="products-grid reveal">
+      <a href="area-fumatori.html" class="product-card" style="text-decoration:none; display:block; color:inherit;">
+        <img src="tabacchi.png" class="product-img" alt="Tabacchi">
+        <h3>Tabacchi & Svapo</h3>
+      </a>
+      <a href="prodotti.html#edicola" class="product-card" style="text-decoration:none; display:block; color:inherit;">
+        <img src="giornali.png" class="product-img" alt="Edicola">
+        <h3>Edicola & Riviste</h3>
+      </a>
+      <a href="prodotti.html#lotto" class="product-card" style="text-decoration:none; display:block; color:inherit;">
+        <img src="lotto.png" class="product-img" alt="Lotto">
+        <h3>Lotto & Giochi</h3>
+      </a>
+      <a href="prodotti.html#regali" class="product-card" style="text-decoration:none; display:block; color:inherit;">
+        <img src="regali.png" class="product-img" alt="Idee Regalo">
+        <h3>Idee Regalo</h3>
+      </a>
+    </section>
+
+    <div class="section-divider reveal"><i></i></div>
+
+    <section class="map-section reveal">
+      <iframe class="map-iframe"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2777.636601443657!2d9.946950276857973!3d45.87858050560706!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4783f98013d2843b%3A0x6b772c72b84f3c02!2sPiazza%20Orologio%2C%202%2C%2024023%20Clusone%20BG!5e0!3m2!1sit!2sit!4v1700000000000"
+        allowfullscreen="" loading="lazy"></iframe>
+      <div class="map-info">
+        <h3>Vieni a trovarci</h3>
+        <p><i class="fas fa-map-marker-alt"></i> Piazza Orologio, 2<br>24023 Clusone (BG)</p>
+        <p><i class="fas fa-clock"></i> <strong>Orari:</strong><br>Lun-Sab: 07:00 - 19:30<br>Domenica: 08:00 - 12:30</p>
+        <p><i class="fas fa-phone"></i> 0346 21194</p>
+      </div>
+    </section>
+
+    <div class="section-divider reveal"><i></i></div>
+
+    <section class="services-slider reveal">
+      <h2 style="color:var(--primary); text-transform:uppercase; margin-bottom:30px;">I Nostri Servizi</h2>
+      <div class="slider-container">
+        <button class="arrow-btn btn-left" onclick="moveSlider(-1)">❮</button>
+        <div class="slider-wrapper" id="slider">
+          <div class="service-card">
+            <h4>Pagamento Bollette</h4>
+            <p>PagoPA e bollettini postali.</p>
+          </div>
+          <div class="service-card">
+            <h4>Ricariche</h4>
+            <p>Tutti gli operatori telefonici.</p>
+          </div>
+          <div class="service-card">
+            <h4>Amazon Hub</h4>
+            <p>Ritiro e reso pacchi.</p>
+          </div>
+          <div class="service-card">
+            <h4>Punto Poste</h4>
+            <p>Ritiro pacchi Poste Italiane.</p>
+          </div>
+          <div class="service-card">
+            <h4>SPID</h4>
+            <p>Attivazione identità digitale.</p>
+          </div>
+          <div class="service-card">
+            <h4>Valori Bollati</h4>
+            <p>Marche da bollo e contributi.</p>
+          </div>
+          <div class="service-card">
+            <h4>Biglietteria</h4>
+            <p>Trasporti locali e nazionali.</p>
+          </div>
+        </div>
+        <button class="arrow-btn btn-right" onclick="moveSlider(1)">❯</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p><strong>Tabaccheria Edicola Bianchi</strong></p>
+      <p>Piazza Orologio, 2 - 24023 Clusone (BG)</p>
+      <div class="social-links">
+        <a href="#" target="_blank" class="fb"><i class="fab fa-facebook"></i></a>
+        <a href="#" target="_blank" class="ig"><i class="fab fa-instagram"></i></a>
+      </div>
+      <hr>
+      <p style="font-size: 14px; opacity: 0.7;">© 2026 Tabaccheria Bianchi. Tutti i diritti riservati.</p>
+    </div>
+  </footer>
+  <script src="script.js"></script>
+</body>
+
+</html>
