@@ -10,7 +10,6 @@ export default async function handler(req, res) {
     return res.status(400).json({ reply: 'Nessun messaggio fornito.' });
   }
 
-  // Recuperiamo la chiave segreta in modo sicuro dalle variabili del server
   const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
   if (!GEMINI_API_KEY) {
@@ -19,7 +18,6 @@ export default async function handler(req, res) {
     });
   }
 
-  // ✅ CAMBIATO: gemini-pro invece di gemini-1.5-flash
   const url = `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`;
 
   const systemPrompt = `Sei l'assistente virtuale della Tabaccheria Edicola Bianchi a Clusone. 
@@ -48,19 +46,25 @@ Regole per te:
       body: JSON.stringify(requestBody)
     });
 
+    console.log("Response Status:", response.status);
+    
     const data = await response.json();
 
-    console.log("Gemini Response:", JSON.stringify(data, null, 2));
+    console.log("Gemini Response COMPLETO:", JSON.stringify(data, null, 2));
+    console.log("data.candidates esiste?", !!data.candidates);
+    console.log("data.candidates è un array?", Array.isArray(data.candidates));
+    console.log("data.candidates.length:", data.candidates ? data.candidates.length : "N/A");
 
     if (data && data.candidates && data.candidates.length > 0) {
-      // Invia risposta pulita al frontend
+      console.log("Risposta trovata! Contenuto:", data.candidates[0].content);
       return res.status(200).json({ reply: data.candidates[0].content.parts[0].text.trim() });
     } else {
-      console.error("Gemini API Error:", data);
+      console.error("Gemini API Error completo:", JSON.stringify(data, null, 2));
       return res.status(500).json({ reply: "Scusa, in questo momento i miei circuiti sono occupati. Puoi chiamarci allo 0346 21194." });
     }
   } catch (err) {
-    console.error("Failed to fetch from Gemini:", err);
+    console.error("Failed to fetch from Gemini:", err.message);
+    console.error("Full error:", err);
     return res.status(500).json({ reply: "Si è verificato un errore di connessione." });
   }
 }
